@@ -37,14 +37,12 @@ class GetMoviesListUseCase @Inject constructor(
             it.toMovieContent()
         }
     )
-
-    private fun Content.toMovieContent() = MovieContent(
-        name = this.name,
-        posterImage = this.posterImage
-    )
-
-
 }
+
+fun Content.toMovieContent() = MovieContent(
+    name = this.name,
+    posterImage = this.posterImage
+)
 
 
 

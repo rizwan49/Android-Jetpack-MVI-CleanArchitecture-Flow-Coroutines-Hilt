@@ -2,7 +2,6 @@ package com.rizwan.cinehub.ui.movies.compose
 
 import android.content.Context
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -16,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.rizwan.cinehub.R
 import com.rizwan.cinehub.Utils
 import com.rizwan.cinehub.ui.movies.MoviesListSideEffects
 import com.rizwan.cinehub.ui.movies.MoviesViewModel
@@ -72,7 +70,15 @@ fun MovieListScreen(
 
             val scrollState = rememberLazyGridState()
 
-            SearchBarUI(title = movies.title ?: "")
+            SearchBarUI(
+                title = movies.title ?: "",
+                moviesState = movies,
+                searchIconClicked = viewModel::searchIconClicked,
+                backButtonClicked = {
+                    viewModel.searchIconClicked(isEnabled = false)
+                },
+                performSearch = viewModel::performSearch
+            )
 
             val spanCount = when (orientation) {
                 Configuration.ORIENTATION_LANDSCAPE -> 5
@@ -94,7 +100,12 @@ fun MovieListScreen(
                     content = {
                         items(movies.contentList.size) { index ->
                             MovieListItem(movie = movies.contentList[index], spanCount)
-                            if (!isFetching && index == (movies.contentList.size - 1)) {
+                            val temp by remember {
+                                derivedStateOf {
+                                    state.isSearchActivated.not() && !isFetching && index == (movies.contentList.size - 1)
+                                }
+                            }
+                            if (temp) {
                                 loadNextPage()
                             }
                         }

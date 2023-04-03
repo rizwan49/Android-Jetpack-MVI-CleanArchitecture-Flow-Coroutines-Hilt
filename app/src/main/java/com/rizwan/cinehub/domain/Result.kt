@@ -1,5 +1,6 @@
 package com.rizwan.cinehub.domain
 
+import com.rizwan.cinehub.domain.entities.MovieContent
 import com.rizwan.cinehub.domain.entities.MoviesEntity
 
 /**
@@ -7,5 +8,7 @@ import com.rizwan.cinehub.domain.entities.MoviesEntity
  */
 sealed class Result {
     data class Success(val movies: MoviesEntity) : Result()
+
+    data class SearchedSuccess(val content: List<MovieContent>) : Result()
     data class Error(val errorMessage: String) : Result()
 }

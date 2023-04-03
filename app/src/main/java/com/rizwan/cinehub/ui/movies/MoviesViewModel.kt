@@ -44,6 +44,7 @@ class MoviesViewModel @Inject constructor(
         getMoviesListUseCase.getMoviesList(page = state.page + 1).collect {
             when (it) {
                 is Result.Success -> {
+
                     _mutableList.addAll(it.movies.contentList)
                     delay(200)
                     reduce {
@@ -58,6 +59,39 @@ class MoviesViewModel @Inject constructor(
 
                 is Result.Error -> {
                     // not handle error case for now
+                }
+                else -> {
+                    //do nothing
+                }
+            }
+        }
+    }
+
+    fun searchIconClicked(isEnabled: Boolean) = intent {
+        reduce {
+            state.copy(isSearchActivated = isEnabled, title = "", page = 0, contentList = _mutableList)
+        }
+        if(isEnabled.not()){
+            loadNextPage()
+        }
+    }
+
+    fun performSearch(searchedText: String) = intent {
+        Log.d("search"," viewModel")
+//        _mutableList.clear()
+        searchMoviesUseCase.performSearch(searchedText = searchedText).collect {
+            when (it) {
+                is Result.SearchedSuccess -> {
+                    _mutableList.addAll(it.content.toMutableList())
+                    reduce {
+                        state.copy(contentList = it.content.toMutableList())
+                    }
+                }
+                is Result.Error -> {
+                    Log.d("search"," search error")
+                }
+                else -> {
+                    // do nothing
                 }
             }
         }

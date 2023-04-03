@@ -9,7 +9,8 @@ data class MoviesState(
     val page: Int = 0,
     val pageNum: String? = null,
     val title: String? = null,
-    val contentList: MutableList<MovieContent> = mutableListOf()
+    val contentList: MutableList<MovieContent> = mutableListOf(),
+    val isSearchActivated : Boolean = false,
 )
 
 enum class UiStatus {

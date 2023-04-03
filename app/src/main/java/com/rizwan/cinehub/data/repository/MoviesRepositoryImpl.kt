@@ -2,6 +2,7 @@ package com.rizwan.cinehub.data.repository
 
 import android.util.Log
 import com.rizwan.cinehub.data.MoviesManager
+import com.rizwan.cinehub.data.source.local.Content
 import com.rizwan.cinehub.data.source.local.LocalMovieModel
 import com.rizwan.cinehub.domain.di.ApplicationScope
 import com.rizwan.cinehub.domain.di.IoDispatcher
@@ -30,8 +31,10 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSearchedMoviesList(moviesName: String): List<LocalMovieModel> {
-        TODO("Not yet implemented")
+    override suspend fun getSearchedMoviesList(searchedText: String): List<Content> {
+        return withContext(dispatcher) {
+            Log.d(TAG, "getSearchedMoviesList called : $searchedText")
+            moviesManager.getSearchedMoviesList(searchedText = searchedText)
+        }
     }
-
 }
