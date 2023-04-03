@@ -72,6 +72,7 @@ class MoviesViewModel @Inject constructor(
             state.copy(isSearchActivated = isEnabled, title = "", page = 0, contentList = _mutableList)
         }
         if(isEnabled.not()){
+            _mutableList.clear()
             loadNextPage()
         }
     }
