@@ -5,10 +5,14 @@ import android.util.Log
 import com.rizwan.cinehub.data.repository.MoviesRepositoryImpl
 import com.rizwan.cinehub.data.source.local.Content
 import com.rizwan.cinehub.data.source.local.LocalMovieModel
+import com.rizwan.cinehub.domain.Result
+import com.rizwan.cinehub.domain.di.IoDispatcher
 import com.rizwan.cinehub.domain.entities.MovieContent
 import com.rizwan.cinehub.domain.entities.MoviesEntity
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 /**
@@ -16,19 +20,20 @@ import javax.inject.Inject
  */
 
 class GetMoviesListUseCase @Inject constructor(
-    private val moviesRepository: MoviesRepositoryImpl
+    private val moviesRepository: MoviesRepositoryImpl,
+    @IoDispatcher val dispatcher: CoroutineDispatcher,
 ) {
 
-    suspend fun getMoviesList(page: Int): Flow<com.rizwan.cinehub.domain.Result> = flow {
+    suspend fun getMoviesList(page: Int): Flow<Result<MoviesEntity>> = flow {
         try {
             Log.d("Rizwan", "getMoviesList called from GetMoviesListUseCase")
             val entity = moviesRepository.getMoviesList(page = page).toEntity()
-            emit(com.rizwan.cinehub.domain.Result.Success(entity))
+            emit(Result.Success(entity))
         } catch (e: Exception) {
             Log.d("Rizwan", "GetMoviesListUseCase error ")
-            emit(com.rizwan.cinehub.domain.Result.Error(e.message ?: "Unknown error"))
+            emit(Result.Error(e.message ?: "Unknown error"))
         }
-    }
+    }.flowOn(dispatcher)
 
     private fun LocalMovieModel.toEntity() = MoviesEntity(
         pageNum = this.page.pageNum,

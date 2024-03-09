@@ -1,9 +1,10 @@
 package com.rizwan.cinehub.ui.movies
 
 
+import androidx.compose.runtime.Stable
 import com.rizwan.cinehub.domain.entities.MovieContent
 
-
+@Stable
 data class MoviesState(
     val status: UiStatus? = UiStatus.LOADING,
     val page: Int = 0,

@@ -45,13 +45,13 @@ class MoviesViewModel @Inject constructor(
             when (it) {
                 is Result.Success -> {
 
-                    _mutableList.addAll(it.movies.contentList)
+                    _mutableList.addAll(it.data.contentList)
                     delay(200)
                     reduce {
                         state.copy(
                             status = UiStatus.LOADED,
-                            page = it.movies.pageNum.toInt(),
-                            title = it.movies.title,
+                            page = it.data.pageNum.toInt(),
+                            title = it.data.title,
                             contentList = _mutableList
                         )
                     }
@@ -82,10 +82,10 @@ class MoviesViewModel @Inject constructor(
 //        _mutableList.clear()
         searchMoviesUseCase.performSearch(searchedText = searchedText).collect {
             when (it) {
-                is Result.SearchedSuccess -> {
-                    _mutableList.addAll(it.content.toMutableList())
+                is Result.Success -> {
+                    _mutableList.addAll(it.data.toMutableList())
                     reduce {
-                        state.copy(contentList = it.content.toMutableList())
+                        state.copy(contentList = it.data.toMutableList())
                     }
                 }
                 is Result.Error -> {
