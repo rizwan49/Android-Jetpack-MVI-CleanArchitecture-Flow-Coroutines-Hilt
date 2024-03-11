@@ -29,7 +29,7 @@ Ensured adherence to the SOLID principles (Single Responsibility, Open-Closed, L
 Followed Google's recommended Android app architecture guidelines, which advocate for a clear separation of concerns and the use of architecture components like ViewModel and LiveData for managing UI-related data.
 - **[UI Layer](https://developer.android.com/topic/architecture/ui-layer)** 
 - **[Domain Layer (optional)](https://developer.android.com/jetpack/guide/domain-layer)**
-- **[Data Layer](https://developer.android.com/jetpack/guide/data-layer)https://developer.android.com/jetpack/guide/data-layer** 
+- **[Data Layer](https://developer.android.com/topic/architecture/data-layer)**
 
 ## Support
 
