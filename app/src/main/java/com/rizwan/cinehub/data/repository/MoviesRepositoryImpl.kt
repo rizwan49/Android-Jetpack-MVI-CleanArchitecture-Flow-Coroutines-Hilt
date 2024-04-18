@@ -4,6 +4,7 @@ import android.util.Log
 import com.rizwan.cinehub.data.MoviesManager
 import com.rizwan.cinehub.data.source.local.Content
 import com.rizwan.cinehub.data.source.local.LocalMovieModel
+import com.rizwan.cinehub.domain.MoviesRepository
 import com.rizwan.cinehub.domain.di.ApplicationScope
 import com.rizwan.cinehub.domain.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher

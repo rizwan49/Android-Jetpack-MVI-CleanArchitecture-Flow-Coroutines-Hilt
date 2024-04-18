@@ -21,6 +21,8 @@ fun StatusBarUI() {
             color = Color.Transparent,
             darkIcons = useDarkIcons
         )
-        onDispose {}
+        onDispose {
+
+        }
     }
 }

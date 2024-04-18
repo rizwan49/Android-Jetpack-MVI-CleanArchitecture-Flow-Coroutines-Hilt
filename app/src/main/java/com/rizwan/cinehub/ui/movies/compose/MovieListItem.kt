@@ -1,11 +1,17 @@
 package com.rizwan.cinehub.ui.movies.compose
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,8 +40,8 @@ fun MovieListItem(movie: MovieContent, numColumns: Int) {
             val mContext = LocalContext.current
 
             val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-            val posterWidth = screenWidth / numColumns - (16.dp / numColumns)
-            val posterHeight = posterWidth * 1.3f
+            val posterWidth = remember { screenWidth / numColumns - (16.dp / numColumns) }
+            val posterHeight = remember { posterWidth * 1.3f }
 
             Image(
                 painter = rememberAsyncImagePainter(

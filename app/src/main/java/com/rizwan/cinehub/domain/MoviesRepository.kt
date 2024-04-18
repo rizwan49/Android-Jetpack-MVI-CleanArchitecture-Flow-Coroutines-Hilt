@@ -1,4 +1,4 @@
-package com.rizwan.cinehub.data.repository
+package com.rizwan.cinehub.domain
 
 import com.rizwan.cinehub.data.source.local.Content
 import com.rizwan.cinehub.data.source.local.LocalMovieModel

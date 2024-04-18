@@ -5,6 +5,7 @@ import android.util.Log
 import com.rizwan.cinehub.data.repository.MoviesRepositoryImpl
 import com.rizwan.cinehub.data.source.local.Content
 import com.rizwan.cinehub.data.source.local.LocalMovieModel
+import com.rizwan.cinehub.domain.MoviesRepository
 import com.rizwan.cinehub.domain.Result
 import com.rizwan.cinehub.domain.di.IoDispatcher
 import com.rizwan.cinehub.domain.entities.MovieContent
@@ -20,7 +21,7 @@ import javax.inject.Inject
  */
 
 class GetMoviesListUseCase @Inject constructor(
-    private val moviesRepository: MoviesRepositoryImpl,
+    private val moviesRepository: MoviesRepository,
     @IoDispatcher val dispatcher: CoroutineDispatcher,
 ) {
 

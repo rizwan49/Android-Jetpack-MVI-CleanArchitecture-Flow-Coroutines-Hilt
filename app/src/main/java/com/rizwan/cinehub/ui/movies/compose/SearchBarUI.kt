@@ -83,15 +83,11 @@ fun SearchBarUI(
                     value = searchText,
                     onValueChange = {
                         searchText = it
-                        if (searchText.length > 2) {
-                            performSearch(searchText)
-                        }
+                        performSearch(searchText)
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = androidx.compose.ui.text.input.ImeAction.Search),
                     keyboardActions = KeyboardActions(onSearch = {
-                        if (searchText.length > 2) {
-                            performSearch(searchText)
-                        }
+                        performSearch(searchText)
                     }),
                     singleLine = true,
                     modifier = Modifier

@@ -85,34 +85,32 @@ fun MovieListScreen(
                 else -> 3
             }
 
-            movies?.let {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(spanCount),
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(spanCount),
 
-                    contentPadding = PaddingValues(
-                        start = 12.dp,
-                        top = 16.dp,
-                        end = 12.dp,
-                        bottom = 16.dp
-                    ),
-                    modifier = Modifier.fillMaxSize(),
-                    state = scrollState,
-                    content = {
-                        items(movies.contentList.size) { index ->
-                            MovieListItem(movie = movies.contentList[index], spanCount)
-                            val temp by remember {
-                                derivedStateOf {
-                                    state.isSearchActivated.not() && !isFetching && index == (movies.contentList.size - 1)
-                                }
-                            }
-                            if (temp) {
-                                loadNextPage()
+                contentPadding = PaddingValues(
+                    start = 12.dp,
+                    top = 16.dp,
+                    end = 12.dp,
+                    bottom = 16.dp
+                ),
+                modifier = Modifier.fillMaxSize(),
+                state = scrollState,
+                content = {
+                    items(movies.contentList.size) { index ->
+                        MovieListItem(movie = movies.contentList[index], spanCount)
+                        val temp by remember {
+                            derivedStateOf {
+                                state.isSearchActivated.not() && !isFetching && index == (movies.contentList.size - 1)
                             }
                         }
-                    },
-                    userScrollEnabled = true,
-                )
-            }
+                        if (temp) {
+                            loadNextPage()
+                        }
+                    }
+                },
+                userScrollEnabled = true,
+            )
 
         }
         UiStatus.ERROR -> {

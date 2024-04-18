@@ -29,6 +29,7 @@ class MoviesManager @Inject constructor(
     }
 
     private val gson = Gson()
+    private val fileNames = arrayOf(PAGE_1, PAGE_2, PAGE_3)
 
     /**
      * this method will required to get the json data from assets files
@@ -54,23 +55,16 @@ class MoviesManager @Inject constructor(
     suspend fun getSearchedMoviesList(searchedText: String): List<Content> {
         return withContext(dispatcher) {
             val searchList: MutableList<Content> = mutableListOf()
-
-            val fileNames = arrayOf(PAGE_1, PAGE_2, PAGE_3)
-
             for (fileName in fileNames) {
 
                 val jsonString = context.assets.open(fileName).bufferedReader().use {
                     it.readText()
                 }
 
-                val moviesInFile: LocalMovieModel =
-                    gson.fromJson<LocalMovieModel?>(
-                        jsonString,
-                        object : TypeToken<LocalMovieModel>() {}.type
-                    )
+                val moviesInFile = jsonString.fromJson<LocalMovieModel>() //using extension function
 
                 searchList.addAll(moviesInFile.page.contentItems.content.filter { content ->
-                        content.name.contains(searchedText, ignoreCase = true)
+                    content.name.contains(searchedText, ignoreCase = true)
                 })
 
                 Log.d("search found", "${searchList.size}")
