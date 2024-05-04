@@ -4,9 +4,8 @@ import android.util.Log
 import com.rizwan.cinehub.data.MoviesManager
 import com.rizwan.cinehub.data.source.local.Content
 import com.rizwan.cinehub.data.source.local.LocalMovieModel
-import com.rizwan.cinehub.domain.MoviesRepository
-import com.rizwan.cinehub.domain.di.ApplicationScope
-import com.rizwan.cinehub.domain.di.IoDispatcher
+import com.rizwan.cinehub.data.di.ApplicationScope
+import com.rizwan.cinehub.data.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
@@ -25,7 +24,7 @@ class MoviesRepositoryImpl @Inject constructor(
         const val TAG = "MoviesRepositoryImpl"
     }
 
-    override suspend fun getMoviesList(page: Int): LocalMovieModel {
+    override suspend fun getMoviesList(page: Int): LocalMovieModel? {
         return withContext(dispatcher) {
             Log.d(TAG, "getMoviesList get called for page: $page")
             moviesManager.getAllMovies(page = page)

@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.rizwan.cinehub.data.di.IoDispatcher
 import com.rizwan.cinehub.data.source.local.Content
 import com.rizwan.cinehub.data.source.local.LocalMovieModel
-import com.rizwan.cinehub.domain.di.IoDispatcher
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -35,12 +35,15 @@ class MoviesManager @Inject constructor(
      * this method will required to get the json data from assets files
      * @param page : required to get the specific page.
      */
-    suspend fun getAllMovies(page: Int): LocalMovieModel {
+    suspend fun getAllMovies(page: Int): LocalMovieModel? {
         return withContext(dispatcher) {
             val fileName = when (page) {
                 1 -> PAGE_1
                 2 -> PAGE_2
-                else -> PAGE_3
+                3 -> PAGE_3
+                else -> {
+                    return@withContext null
+                }
             }
 
             val jsonString = context.assets.open(fileName).bufferedReader().use {

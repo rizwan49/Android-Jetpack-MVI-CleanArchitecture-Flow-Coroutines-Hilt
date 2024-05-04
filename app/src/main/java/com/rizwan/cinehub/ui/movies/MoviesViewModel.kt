@@ -32,7 +32,6 @@ class MoviesViewModel @Inject constructor(
         MoviesState()
     )
 
-    private val _mutableList: MutableList<MovieContent> = mutableListOf()
 
     init {
         loadNextPage()
@@ -44,19 +43,20 @@ class MoviesViewModel @Inject constructor(
 
     fun loadNextPage() = intent {
         Log.d("Rizwan", "loadNextPage called Page: ${state.page + 1}")
+//        if(state.page == 0)
+//            state.contentList.clear()
 
         getMoviesListUseCase.getMoviesList(page = state.page + 1).collect {
             when (it) {
                 is Result.Success -> {
 
-                    _mutableList.addAll(it.data.contentList)
-                    delay(200)
+                    val mutableList = state.contentList + it.data.contentList
                     reduce {
                         state.copy(
                             status = UiStatus.LOADED,
                             page = it.data.pageNum.toInt(),
                             title = it.data.title,
-                            contentList = _mutableList
+                            contentList = mutableList.toMutableList()
                         )
                     }
                 }
@@ -77,10 +77,10 @@ class MoviesViewModel @Inject constructor(
                 isSearchActivated = isEnabled,
                 title = "",
                 page = 0,
-                contentList = _mutableList
+                contentList = mutableListOf()
             )
         }
-        _mutableList.clear()
+//        _mutableList.clear()
         if (isEnabled.not()) {
             loadNextPage()
         }
@@ -93,7 +93,7 @@ class MoviesViewModel @Inject constructor(
             if (it.isNotEmpty()) {
                 return@filter true
             } else {
-                _mutableList.addAll(listOf<MovieContent>().toMutableList())
+
                 reduce {
                     state.copy(contentList = listOf<MovieContent>().toMutableList())
                 }
@@ -104,11 +104,11 @@ class MoviesViewModel @Inject constructor(
         }.flowOn(Dispatchers.Default).collect {
             when (it) {
                 is Result.Success -> {
-                    _mutableList.addAll(it.data.toMutableList())
                     reduce {
                         state.copy(contentList = it.data.toMutableList())
                     }
                 }
+
                 is Result.Error -> {
                     Log.d("search", " search error")
                 }

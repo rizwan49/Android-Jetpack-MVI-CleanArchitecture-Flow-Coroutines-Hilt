@@ -1,4 +1,4 @@
-package com.rizwan.cinehub.domain.di
+package com.rizwan.cinehub.data.di
 
 import dagger.Module
 import dagger.Provides

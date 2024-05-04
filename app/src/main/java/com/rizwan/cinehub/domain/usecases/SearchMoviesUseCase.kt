@@ -1,9 +1,9 @@
 package com.rizwan.cinehub.domain.usecases
 
 import android.util.Log
-import com.rizwan.cinehub.domain.MoviesRepository
+import com.rizwan.cinehub.data.repository.MoviesRepository
 import com.rizwan.cinehub.domain.Result
-import com.rizwan.cinehub.domain.di.DefaultDispatcher
+import com.rizwan.cinehub.data.di.DefaultDispatcher
 import com.rizwan.cinehub.domain.entities.MovieContent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

@@ -1,7 +1,7 @@
-package com.rizwan.cinehub.domain.di
+package com.rizwan.cinehub.data.di
 
 import com.rizwan.cinehub.data.repository.MoviesRepositoryImpl
-import com.rizwan.cinehub.domain.MoviesRepository
+import com.rizwan.cinehub.data.repository.MoviesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

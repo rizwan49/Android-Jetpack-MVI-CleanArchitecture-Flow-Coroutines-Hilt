@@ -2,12 +2,12 @@ package com.rizwan.cinehub.domain.usecases
 
 
 import android.util.Log
+import com.rizwan.cinehub.data.di.IoDispatcher
+import com.rizwan.cinehub.data.repository.MoviesRepository
 import com.rizwan.cinehub.data.repository.MoviesRepositoryImpl
 import com.rizwan.cinehub.data.source.local.Content
 import com.rizwan.cinehub.data.source.local.LocalMovieModel
-import com.rizwan.cinehub.domain.MoviesRepository
 import com.rizwan.cinehub.domain.Result
-import com.rizwan.cinehub.domain.di.IoDispatcher
 import com.rizwan.cinehub.domain.entities.MovieContent
 import com.rizwan.cinehub.domain.entities.MoviesEntity
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,8 +28,10 @@ class GetMoviesListUseCase @Inject constructor(
     suspend fun getMoviesList(page: Int): Flow<Result<MoviesEntity>> = flow {
         try {
             Log.d("Rizwan", "getMoviesList called from GetMoviesListUseCase")
-            val entity = moviesRepository.getMoviesList(page = page).toEntity()
-            emit(Result.Success(entity))
+            moviesRepository.getMoviesList(page = page)?.let {
+                emit(Result.Success(it.toEntity()))
+            }
+
         } catch (e: Exception) {
             Log.d("Rizwan", "GetMoviesListUseCase error ")
             emit(Result.Error(e.message ?: "Unknown error"))

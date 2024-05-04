@@ -13,6 +13,7 @@ data class MoviesEntity(
     val contentList: List<MovieContent> = mutableListOf()
 )
 
+@Stable
 data class MovieContent(
     val name: String,
     val posterImage: String
